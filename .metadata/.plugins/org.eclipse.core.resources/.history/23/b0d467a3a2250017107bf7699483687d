@@ -1,0 +1,39 @@
+package servletPackage;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+@WebServlet(description = "Sample servlet", urlPatterns = { "/Servletcontoh" })
+public class Servlet extends HttpServlet implements javax.servlet.Servlet {
+	private static final long serialVersionUID = 1L;
+//	String jsonObject = "{\"key1\":\"val1\",\"key2\":\"val2\"}";
+	Human human1 = new Human("1", "nama1");
+	Human human2 = new Human("2", "nama2");
+	JSONObject jsonObject1 = new JSONObject();
+	JSONObject jsonObject2 = new JSONObject();
+	JSONArray jsonObjArray = new JSONArray();
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		jsonObject1.put("name", human1.getName());
+		jsonObject1.put("id", human1.getId());
+		jsonObjArray.add(jsonObject1);
+		jsonObject1.clear();
+		jsonObject1.put("name", human2.getName());
+		jsonObject1.put("id", human2.getId());
+		jsonObjArray.add(jsonObject1);
+		
+		jsonObject2.put("data", jsonObjArray);
+		jsonObject2.put("message", "lalalala");
+		
+		response.setContentType("application/json");
+	    response.getWriter().print(jsonObject2.toString());
+	}
+}
